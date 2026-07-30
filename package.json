@@ -1,0 +1,17 @@
+{
+  "name": "n400-processing-times",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Scraper that pulls USCIS N-400 processing times for all field offices into data.json",
+  "scripts": {
+    "scrape": "node scraper/scrape.mjs",
+    "update": "node scraper/scrape.mjs && git add data.json && (git diff --cached --quiet || git commit -m \"Update N-400 processing times\") && git push"
+  },
+  "dependencies": {
+    "puppeteer-core": "^23.0.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
+    "puppeteer-real-browser": "^1.4.4"
+  }
+}

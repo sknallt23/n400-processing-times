@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="N-400 Times" />
+<meta name="theme-color" content="#0b1020" />
+<title>N-400 Processing Times</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230b1020'/%3E%3Ctext x='50' y='68' font-size='54' text-anchor='middle' fill='%2334d399' font-family='system-ui'%3EN%3C/text%3E%3C/svg%3E" />
+<style>
+  :root{
+    --bg:#0b1020; --panel:#141a2e; --panel-2:#1b2237; --line:#273049;
+    --ink:#eef2ff; --ink-2:#aab3cf; --muted:#7b86a8;
+    --accent:#60a5fa; --good:#34d399; --bad:#f87171;
+    --radius:16px; --shadow:0 8px 30px rgba(0,0,0,.35);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:radial-gradient(1200px 600px at 50% -10%,#16203c 0%,var(--bg) 55%) fixed;
+    color:var(--ink);
+    font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    padding:max(12px,env(safe-area-inset-top)) 14px calc(28px + env(safe-area-inset-bottom));
+    max-width:720px;margin:0 auto;
+  }
+  h1,h2,h3{margin:0;font-weight:650;letter-spacing:-.01em}
+  .muted{color:var(--muted)} .ink2{color:var(--ink-2)}
+  .row{display:flex;align-items:center;gap:10px}
+  .between{justify-content:space-between}
+
+  /* Header */
+  header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin:6px 2px 16px}
+  header .title h1{font-size:19px}
+  header .title p{margin:2px 0 0;font-size:12.5px}
+  button{font:inherit;color:var(--ink);cursor:pointer;border:1px solid var(--line);
+    background:var(--panel-2);border-radius:12px;padding:9px 13px}
+  button:active{transform:translateY(1px)}
+  button.primary{background:linear-gradient(180deg,#2b6fe0,#2560c8);border-color:#2f6ad0;font-weight:600}
+  #refreshBtn{display:flex;align-items:center;gap:7px;white-space:nowrap}
+  #refreshBtn .spin{width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,.35);
+    border-top-color:#fff;display:none}
+  #refreshBtn.loading .spin{display:inline-block;animation:spin .8s linear infinite}
+  #refreshBtn.loading .lbl{opacity:.7}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow)}
+
+  /* Hero (San Jose) */
+  .hero{padding:18px 18px 16px;margin-bottom:16px;position:relative;overflow:hidden}
+  .hero::before{content:"";position:absolute;inset:0;
+    background:radial-gradient(600px 200px at 100% 0,rgba(96,165,250,.14),transparent 60%);pointer-events:none}
+  .hero .eyebrow{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+  .hero .office{font-size:20px;margin-top:2px}
+  .hero .bignum{display:flex;align-items:baseline;gap:10px;margin:10px 0 4px}
+  .hero .bignum .n{font-size:58px;font-weight:750;line-height:1;letter-spacing:-.03em}
+  .hero .bignum .u{font-size:17px;color:var(--ink-2)}
+  .hero .sub{font-size:13px}
+  .chip{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;
+    font-size:13px;font-weight:600;border:1px solid var(--line);background:var(--panel-2)}
+  .chip.up{color:var(--bad);border-color:rgba(248,113,113,.35);background:rgba(248,113,113,.10)}
+  .chip.down{color:var(--good);border-color:rgba(52,211,153,.35);background:rgba(52,211,153,.10)}
+  .chip.flat{color:var(--muted)}
+  .hero .meta{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:14px;font-size:12.5px}
+  .hero .meta b{color:var(--ink)}
+
+  .sectitle{display:flex;align-items:baseline;justify-content:space-between;margin:0 4px 10px}
+  .sectitle h2{font-size:15px}
+  .sectitle .hint{font-size:12px}
+
+  /* Map */
+  .mapcard{padding:12px 10px 14px;margin-bottom:16px}
+  .mapwrap{position:relative;width:100%}
+  svg#map{display:block;width:100%;height:auto;touch-action:manipulation}
+  .state{fill:#212a45;stroke:#0b1020;stroke-width:.6}
+  .dot{stroke:rgba(4,8,20,.75);stroke-width:1;cursor:pointer}
+  .dot.sj{stroke:#fff;stroke-width:2.2}
+  .sjhalo{fill:none;stroke:#fff;stroke-opacity:.85}
+  #tip{position:absolute;pointer-events:none;z-index:5;opacity:0;transform:translate(-50%,-118%);
+    background:#0d1428;border:1px solid var(--line);border-radius:10px;padding:8px 10px;min-width:120px;
+    box-shadow:var(--shadow);transition:opacity .1s;font-size:12.5px}
+  #tip .t-off{font-weight:600} #tip .t-mo{font-size:16px;font-weight:700;margin-top:2px}
+  .legend{display:flex;align-items:center;gap:10px;margin:12px 6px 2px}
+  .legend .bar{height:12px;flex:1;border-radius:6px;border:1px solid var(--line)}
+  .legend .lbl{font-size:11.5px;color:var(--muted);white-space:nowrap}
+  .terr{font-size:11.5px;color:var(--muted);margin:8px 6px 0}
+
+  /* List / table */
+  .controls{display:flex;gap:8px;margin:0 2px 10px}
+  .controls input[type=search]{flex:1;background:var(--panel-2);border:1px solid var(--line);color:var(--ink);
+    border-radius:12px;padding:9px 12px;font:inherit}
+  .seg{display:inline-flex;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .seg button{border:0;border-radius:0;background:transparent;padding:9px 12px;color:var(--ink-2);font-size:13px}
+  .seg button.on{background:var(--panel-2);color:var(--ink);font-weight:600}
+  ul.list{list-style:none;margin:0;padding:0}
+  ul.list li{display:grid;grid-template-columns:12px 1fr auto auto;align-items:center;gap:10px;
+    padding:11px 14px;border-bottom:1px solid var(--line)}
+  ul.list li:last-child{border-bottom:0}
+  ul.list li.sj{background:linear-gradient(90deg,rgba(96,165,250,.10),transparent)}
+  .swatch{width:10px;height:10px;border-radius:50%}
+  .oname{font-weight:550} .oname .st{color:var(--muted);font-weight:400;font-size:12.5px;margin-left:6px}
+  .omo{font-variant-numeric:tabular-nums;font-weight:650;font-size:15px;text-align:right;min-width:52px}
+  .odelta{font-size:12px;text-align:right;min-width:56px;font-variant-numeric:tabular-nums}
+  .odelta.up{color:var(--bad)} .odelta.down{color:var(--good)} .odelta.flat{color:var(--muted)}
+  .edited{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--accent);margin-left:6px;vertical-align:middle}
+
+  /* Manual + footer */
+  details.manual{margin-top:16px;border:1px solid var(--line);border-radius:14px;background:var(--panel);overflow:hidden}
+  details.manual>summary{list-style:none;cursor:pointer;padding:13px 16px;font-weight:600;display:flex;justify-content:space-between}
+  details.manual>summary::-webkit-details-marker{display:none}
+  details.manual .body{padding:2px 16px 16px;border-top:1px solid var(--line)}
+  .manual .field{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:12px 0}
+  .manual select,.manual input[type=number]{background:var(--panel-2);border:1px solid var(--line);color:var(--ink);
+    border-radius:10px;padding:9px 11px;font:inherit}
+  .manual input[type=number]{width:96px}
+  .ov{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+  .ov .tag{display:inline-flex;gap:6px;align-items:center;background:var(--panel-2);border:1px solid var(--line);
+    border-radius:999px;padding:3px 6px 3px 10px;font-size:12px}
+  .ov .tag button{padding:2px 7px;border-radius:8px;font-size:12px;line-height:1}
+  footer{margin-top:18px;font-size:12px;color:var(--muted);text-align:center;line-height:1.6}
+  footer a{color:var(--accent)}
+  .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(20px);
+    background:#0d1428;border:1px solid var(--line);border-radius:12px;padding:10px 16px;box-shadow:var(--shadow);
+    opacity:0;transition:.25s;z-index:20;font-size:13px}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .err{padding:14px 16px;color:var(--bad);font-size:13px}
+</style>
+</head>
+<body>
+  <header>
+    <div class="title">
+      <h1>N-400 Processing Times</h1>
+      <p class="muted">USCIS · Application for Naturalization · 80% of cases completed within</p>
+    </div>
+    <button id="refreshBtn" class="primary" title="Reload the latest data">
+      <span class="spin"></span><span class="lbl">Refresh</span>
+    </button>
+  </header>
+
+  <!-- San Jose hero -->
+  <section class="card hero" id="hero" aria-live="polite">
+    <div class="eyebrow">Your office</div>
+    <div class="office" id="heroOffice">San Jose, CA</div>
+    <div class="bignum"><span class="n" id="heroNum">—</span><span class="u">months</span>
+      <span id="heroDelta" class="chip flat" style="margin-left:auto">—</span></div>
+    <div class="sub muted" id="heroSub">Field office · 80% of cases completed within</div>
+    <div class="meta">
+      <span>Updated <b id="heroUpdated">—</b></span>
+      <span>National median <b id="statMedian">—</b> mo</span>
+      <span>Fastest <b id="statMin">—</b> · Slowest <b id="statMax">—</b></span>
+    </div>
+  </section>
+
+  <!-- Heat map -->
+  <div class="sectitle"><h2>National heat map</h2><span class="hint muted">tap a dot</span></div>
+  <section class="card mapcard">
+    <div class="mapwrap">
+      <svg id="map" viewBox="0 0 960 600" preserveAspectRatio="xMidYMid meet" role="img"
+           aria-label="US map of N-400 processing times by field office"></svg>
+      <div id="tip"><div class="t-off"></div><div class="t-mo"></div><div class="t-d muted"></div></div>
+    </div>
+    <div class="legend">
+      <span class="lbl" id="legMin">—</span>
+      <div class="bar" id="legBar"></div>
+      <span class="lbl" id="legMax">—</span>
+      <span class="lbl">months</span>
+    </div>
+    <div class="terr" id="terrNote"></div>
+  </section>
+
+  <!-- Office list -->
+  <div class="sectitle"><h2>All field offices</h2><span class="hint muted" id="listCount"></span></div>
+  <div class="controls">
+    <input type="search" id="search" placeholder="Search office or state…" autocomplete="off" />
+    <div class="seg" id="sortSeg">
+      <button data-sort="slow" class="on">Slowest</button>
+      <button data-sort="fast">Fastest</button>
+      <button data-sort="az">A–Z</button>
+    </div>
+  </div>
+  <section class="card"><ul class="list" id="list"></ul></section>
+
+  <!-- Manual update fallback -->
+  <details class="manual" id="manual">
+    <summary><span>✎ Manually update a value</span><span class="muted">fallback</span></summary>
+    <div class="body">
+      <p class="muted" style="font-size:12.5px;margin:12px 0 0">
+        If the automatic data looks stale, read the current figure on the
+        <a href="https://egov.uscis.gov/processing-times/" target="_blank" rel="noopener" style="color:var(--accent)">USCIS site</a>
+        and enter it here. Your edits are saved on this device and override the fetched value.
+      </p>
+      <div class="field">
+        <select id="mOffice"></select>
+        <input type="number" id="mMonths" step="0.5" min="0" max="60" placeholder="months" />
+        <button id="mSave" class="primary">Save</button>
+      </div>
+      <div class="ov" id="ovList"></div>
+    </div>
+  </details>
+
+  <footer>
+    Data scraped from <a href="https://egov.uscis.gov/processing-times/" target="_blank" rel="noopener">egov.uscis.gov/processing-times</a>.
+    Deltas compare the two most recent updates. Unofficial; for reference only.<br>
+    <span id="lastChecked"></span>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
+<script>
+/* ---- Static field-office coordinates [lng, lat], keyed by USCIS office code ---- */
+const OFFICE_COORDS = {
+  AGA:[144.7937,13.4443], ALB:[-73.7562,42.6526], ABQ:[-106.6504,35.0844], ANC:[-149.9003,61.2181],
+  ATL:[-84.3880,33.7490], BAL:[-76.6122,39.2904], BOI:[-116.2023,43.6150], BOS:[-71.0589,42.3601],
+  BNY:[-73.9442,40.6782], BUF:[-78.8784,42.8864], STA:[-73.2121,44.4759], CHL:[-79.9311,32.7765],
+  CHA:[-64.9307,18.3419], CLT:[-80.8431,35.2271], CHI:[-87.6298,41.8781], CHR:[-64.7035,17.7466],
+  CIN:[-84.5120,39.1031], CLE:[-81.6944,41.4993], CLM:[-82.9988,39.9612], NJC:[-74.5138,40.3162],
+  DAL:[-96.7970,32.7767], DEN:[-104.9903,39.7392], DSM:[-93.6250,41.5868], DET:[-83.0458,42.3314],
+  ELP:[-106.4850,31.7619], OFM:[-81.8723,26.6406], FSA:[-94.3985,35.3859], FRE:[-119.7871,36.7378],
+  GRR:[-82.2271,34.9387], HLG:[-97.6961,26.1906], HAR:[-72.6734,41.7658], HEL:[-112.0391,46.5891],
+  HIA:[-80.2781,25.8576], HHW:[-157.8583,21.3069], HOU:[-95.3698,29.7604], IMP:[-115.5694,32.8475],
+  INP:[-86.1581,39.7684], JAC:[-81.6557,30.3322], KAN:[-94.5786,39.0997], KND:[-80.3173,25.6793],
+  LVG:[-115.1398,36.1699], LAW:[-71.1631,42.7070], LNY:[-73.1350,40.7891], LOS:[-118.2437,34.0522],
+  LAC:[-118.0500,34.0200], LOU:[-85.7585,38.2527], MAN:[-71.4548,42.9956], MEM:[-90.0490,35.1495],
+  MIA:[-80.1918,25.7617], MIL:[-87.9065,43.0389], SPM:[-93.2650,44.9778], MGA:[-86.3000,32.3668],
+  MTL:[-74.8910,39.9340], NTN:[-86.7816,36.1627], NEW:[-74.1724,40.7357], NOL:[-90.0715,29.9511],
+  NYC:[-74.0060,40.7128], NOR:[-76.2859,36.8508], OKL:[-80.1319,26.1723], OKC:[-97.5164,35.4676],
+  OMA:[-95.9345,41.2565], ORL:[-81.3792,28.5383], PHI:[-75.1652,39.9526], PHO:[-112.0740,33.4484],
+  PIT:[-79.9959,40.4406], POM:[-70.2568,43.6591], POO:[-122.6784,45.5152], PRO:[-71.4128,41.8240],
+  QNS:[-73.7949,40.7282], RAL:[-78.6382,35.7796], REN:[-119.8138,39.5296], SAC:[-121.4944,38.5816],
+  STL:[-90.1994,38.6270], SLC:[-111.8910,40.7608], SNA:[-98.4936,29.4241], SBD:[-117.2898,34.1083],
+  SND:[-117.1611,32.7157], SFV:[-118.4487,34.1866], SFR:[-122.4194,37.7749], SNJ:[-121.8863,37.3382],
+  SAJ:[-66.1057,18.4655], SAA:[-117.8677,33.7455], SEA:[-122.3321,47.6062], SPO:[-117.4260,47.6588],
+  TAM:[-82.4572,27.9506], TUC:[-110.9747,32.2226], WAS:[-77.0369,38.9072], WPB:[-80.0534,26.7153],
+  WIC:[-97.3301,37.6872], YAK:[-120.5059,46.6021]
+};
+const SJ = 'SNJ';                 // San Jose field office code
+const RAMP = ['#34d399','#a3e635','#fbbf24','#fb923c','#f87171']; // fast -> slow
+const LS_OVERRIDES = 'n400.overrides';
+const LS_BASELINE  = 'n400.baseline';
+
+const $ = (s,r=document)=>r.querySelector(s);
+const state = { data:null, us:null, color:null, sort:'slow', query:'' };
+
+/* -------- data helpers -------- */
+const overrides = () => { try{return JSON.parse(localStorage.getItem(LS_OVERRIDES))||{}}catch{return{}} };
+const rawMonths = (code)=> { const o=(state.data.offices||[]).find(x=>x.code===code); return o?o.months:null; };
+const effMonths = (code)=> { const ov=overrides(); return (code in ov)?ov[code]:rawMonths(code); };
+
+function computePrev(){
+  const d=state.data;
+  if(d.previous && d.previous.byCode && Object.keys(d.previous.byCode).length)
+    return {by:d.previous.byCode, label:'vs previous update', when:d.previous.updated};
+  let b=null; try{b=JSON.parse(localStorage.getItem(LS_BASELINE))}catch{}
+  if(b && b.updated && b.updated!==d.updated) return {by:b.byCode, label:'since your last check', when:b.updated};
+  return null;
+}
+function saveBaseline(){
+  const d=state.data; let b=null; try{b=JSON.parse(localStorage.getItem(LS_BASELINE))}catch{}
+  if(!b || b.updated!==d.updated){
+    const by={}; for(const o of d.offices) if(o.months!=null) by[o.code]=o.months;
+    localStorage.setItem(LS_BASELINE, JSON.stringify({updated:d.updated, by:by, byCode:by}));
+  }
+}
+function delta(code){
+  const p=state.prev; if(!p) return null;
+  const prev=p.by[code]; const cur=effMonths(code);
+  if(prev==null||cur==null) return null;
+  return Math.round((cur-prev)*10)/10;
+}
+const fmtMonths = (m)=> m==null?'—':(Number.isInteger(m)?m:m.toFixed(1));
+function fmtDate(iso){ if(!iso) return '—'; const d=new Date(iso);
+  return d.toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'}); }
+function median(arr){ const a=[...arr].sort((x,y)=>x-y); const n=a.length; if(!n) return null;
+  return n%2?a[(n-1)/2]:(a[n/2-1]+a[n/2])/2; }
+
+/* -------- color scale -------- */
+function buildColor(){
+  const vals=state.data.offices.filter(o=>o.months!=null).map(o=>o.months);
+  const lo=Math.min(...vals), hi=Math.max(...vals);
+  const dom=d3.range(RAMP.length).map(i=>lo+(hi-lo)*i/(RAMP.length-1));
+  state.color=d3.scaleLinear().domain(dom).range(RAMP).interpolate(d3.interpolateHcl).clamp(true);
+  state.range=[lo,hi];
+}
+
+/* -------- delta chip render -------- */
+function deltaChip(el, dv, {chip=false}={}){
+  el.className = chip ? 'chip' : 'odelta';
+  if(dv==null){ el.classList.add('flat'); el.textContent = chip?'no prior data':'—'; return; }
+  if(dv>0){ el.classList.add('up'); el.textContent='▲ +'+fmtMonths(dv)+(chip?' mo':''); }
+  else if(dv<0){ el.classList.add('down'); el.textContent='▼ '+fmtMonths(dv)+(chip?' mo':''); }
+  else { el.classList.add('flat'); el.textContent = chip?'no change':'0'; }
+}
+
+/* -------- render pieces -------- */
+function renderHero(){
+  const m=effMonths(SJ);
+  $('#heroOffice').textContent = 'San Jose, CA';
+  $('#heroNum').textContent = fmtMonths(m);
+  $('#heroNum').style.color = (m!=null&&state.color)?state.color(m):'';
+  deltaChip($('#heroDelta'), delta(SJ), {chip:true});
+  const vals=state.data.offices.filter(o=>o.months!=null).map(o=>o.months);
+  $('#statMedian').textContent=fmtMonths(median(vals));
+  $('#statMin').textContent=fmtMonths(Math.min(...vals))+' mo';
+  $('#statMax').textContent=fmtMonths(Math.max(...vals))+' mo';
+  $('#heroUpdated').textContent=fmtDate(state.data.updated);
+  $('#heroSub').textContent = state.prev
+    ? 'Field office · Δ '+state.prev.label+' ('+fmtDate(state.prev.when)+')'
+    : 'Field office · 80% of cases completed within';
+}
+
+function renderMap(){
+  const svg=d3.select('#map'); svg.selectAll('*').remove();
+  if(!state.us){ svg.append('text').attr('x',480).attr('y',300).attr('fill','#7b86a8')
+      .attr('text-anchor','middle').text('Map unavailable (base map failed to load)'); return; }
+  const W=960,H=600;
+  const nation=topojson.feature(state.us, state.us.objects.nation);
+  const states=topojson.feature(state.us, state.us.objects.states);
+  const proj=d3.geoAlbersUsa().fitSize([W,H], nation);
+  const path=d3.geoPath(proj);
+  svg.append('g').selectAll('path').data(states.features).join('path')
+     .attr('class','state').attr('d',path);
+
+  const pts=[];
+  for(const o of state.data.offices){
+    const c=OFFICE_COORDS[o.code]; if(!c) continue;
+    const xy=proj(c); if(!xy) continue;               // territories fall outside AlbersUsa
+    const m=effMonths(o.code); if(m==null) continue;
+    pts.push({o, x:xy[0], y:xy[1], m});
+  }
+  const g=svg.append('g');
+  // San Jose halo
+  const sj=pts.find(p=>p.o.code===SJ);
+  if(sj){ g.append('circle').attr('class','sjhalo').attr('cx',sj.x).attr('cy',sj.y).attr('r',13); }
+  g.selectAll('circle.dot').data(pts).join('circle')
+    .attr('class',p=>'dot'+(p.o.code===SJ?' sj':''))
+    .attr('cx',p=>p.x).attr('cy',p=>p.y)
+    .attr('r',p=>p.o.code===SJ?7.5:6)
+    .attr('fill',p=>state.color(p.m))
+    .on('pointerenter',(e,p)=>showTip(e,p))
+    .on('pointermove',(e,p)=>showTip(e,p))
+    .on('pointerleave',hideTip)
+    .on('click',(e,p)=>{e.stopPropagation();showTip(e,p);});
+
+  // legend gradient
+  const bar=$('#legBar');
+  const stops=d3.range(0,1.001,0.05).map(t=>state.color(state.range[0]+(state.range[1]-state.range[0])*t));
+  bar.style.background='linear-gradient(90deg,'+stops.join(',')+')';
+  $('#legMin').textContent=fmtMonths(state.range[0]);
+  $('#legMax').textContent=fmtMonths(state.range[1]);
+
+  // territories not shown on the AlbersUsa map
+  const terr=state.data.offices.filter(o=>{const c=OFFICE_COORDS[o.code];return c&&!proj(c)&&effMonths(o.code)!=null;});
+  $('#terrNote').textContent = terr.length
+    ? 'Not on map (US territories): '+terr.map(o=>o.office+' '+fmtMonths(effMonths(o.code))+'mo').join(' · ')
+    : '';
+}
+
+let tipHideT;
+function showTip(e,p){
+  const tip=$('#tip'), wrap=$('.mapwrap').getBoundingClientRect();
+  tip.querySelector('.t-off').textContent=p.o.office;
+  tip.querySelector('.t-mo').textContent=fmtMonths(p.m)+' months';
+  tip.querySelector('.t-mo').style.color=state.color(p.m);
+  const dv=delta(p.o.code);
+  const dEl=tip.querySelector('.t-d');
+  dEl.textContent = dv==null?'' : (dv>0?'▲ +'+fmtMonths(dv):dv<0?'▼ '+fmtMonths(dv):'no change')+' mo';
+  dEl.style.color = dv>0?'var(--bad)':dv<0?'var(--good)':'var(--muted)';
+  // position over the marker (convert svg coords -> screen)
+  const svg=$('#map'), r=svg.getBoundingClientRect(), sx=r.width/960, sy=r.height/600;
+  tip.style.left=(p.x*sx)+'px'; tip.style.top=(p.y*sy)+'px';
+  tip.style.opacity=1; clearTimeout(tipHideT);
+}
+function hideTip(){ tipHideT=setTimeout(()=>{$('#tip').style.opacity=0;},60); }
+
+function renderList(){
+  const ul=$('#list'); ul.innerHTML='';
+  const ov=overrides(); const q=state.query.trim().toLowerCase();
+  let rows=state.data.offices.map(o=>({o, m:effMonths(o.code), edited:(o.code in ov)}));
+  if(q) rows=rows.filter(r=>(r.o.office+' '+r.o.state+' '+r.o.code).toLowerCase().includes(q));
+  const cmp={
+    slow:(a,b)=>(b.m??-1)-(a.m??-1)||a.o.office.localeCompare(b.o.office),
+    fast:(a,b)=>(a.m??1e9)-(b.m??1e9)||a.o.office.localeCompare(b.o.office),
+    az:(a,b)=>a.o.office.localeCompare(b.o.office)
+  }[state.sort];
+  rows.sort(cmp);
+  // pin San Jose on top (unless filtered out)
+  const sjIdx=rows.findIndex(r=>r.o.code===SJ);
+  if(sjIdx>0){ rows.unshift(rows.splice(sjIdx,1)[0]); }
+  $('#listCount').textContent=rows.length+' offices';
+
+  for(const r of rows){
+    const li=document.createElement('li'); if(r.o.code===SJ) li.className='sj';
+    const sw=document.createElement('span'); sw.className='swatch';
+    sw.style.background=(r.m!=null&&state.color)?state.color(r.m):'#333';
+    const name=document.createElement('div'); name.className='oname';
+    name.innerHTML=(r.o.code===SJ?'★ ':'')+r.o.city+'<span class="st">'+r.o.state+'</span>'+
+      (r.edited?'<span class="edited" title="manually edited"></span>':'');
+    const mo=document.createElement('div'); mo.className='omo';
+    mo.textContent=fmtMonths(r.m); mo.style.color=(r.m!=null&&state.color)?state.color(r.m):'';
+    const dl=document.createElement('div'); deltaChip(dl, delta(r.o.code));
+    li.append(sw,name,mo,dl); ul.append(li);
+  }
+}
+
+function renderManual(){
+  const sel=$('#mOffice');
+  if(!sel.options.length){
+    const list=[...state.data.offices].sort((a,b)=>a.office.localeCompare(b.office));
+    for(const o of list){ const opt=document.createElement('option');
+      opt.value=o.code; opt.textContent=o.office; sel.append(opt); }
+    sel.value=SJ;
+  }
+  const ov=overrides(); const box=$('#ovList'); box.innerHTML='';
+  const keys=Object.keys(ov);
+  if(!keys.length){ box.innerHTML='<span class="muted" style="font-size:12px">No manual overrides.</span>'; return; }
+  for(const code of keys){
+    const o=state.data.offices.find(x=>x.code===code)||{office:code};
+    const tag=document.createElement('span'); tag.className='tag';
+    tag.innerHTML='<span>'+o.office+': <b>'+fmtMonths(ov[code])+'</b> mo</span>';
+    const b=document.createElement('button'); b.textContent='✕'; b.title='remove override';
+    b.onclick=()=>{ const cur=overrides(); delete cur[code]; localStorage.setItem(LS_OVERRIDES,JSON.stringify(cur)); renderAll(); };
+    tag.append(b); box.append(tag);
+  }
+}
+
+function renderAll(){ buildColor(); renderHero(); renderMap(); renderList(); renderManual(); }
+
+/* -------- loading + refresh -------- */
+async function loadData(bust){
+  const url='./data.json'+(bust?('?t='+Date.now()):'');
+  const r=await fetch(url,{cache:'no-store'}); if(!r.ok) throw new Error('HTTP '+r.status);
+  return r.json();
+}
+async function loadMap(){
+  try{ const r=await fetch('./us-states-10m.json',{cache:'force-cache'});
+    if(r.ok) state.us=await r.json(); }
+  catch{ /* map optional */ }
+}
+function toast(msg){ const t=$('#toast'); t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2200); }
+
+async function refresh(){
+  const btn=$('#refreshBtn'); btn.classList.add('loading');
+  try{
+    const fresh=await loadData(true);
+    const changed = !state.data || fresh.updated!==state.data.updated;
+    state.data=fresh; state.prev=computePrev(); renderAll(); saveBaseline();
+    $('#lastChecked').textContent='Last checked '+new Date().toLocaleString();
+    toast(changed?('Updated · '+fmtDate(fresh.updated)):'Up to date · no change');
+  }catch(e){ toast('Refresh failed — showing last data'); }
+  finally{ btn.classList.remove('loading'); }
+}
+
+/* -------- events -------- */
+$('#refreshBtn').addEventListener('click',refresh);
+$('#search').addEventListener('input',e=>{state.query=e.target.value;renderList();});
+$('#sortSeg').addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b)return;
+  [...$('#sortSeg').children].forEach(x=>x.classList.toggle('on',x===b)); state.sort=b.dataset.sort; renderList(); });
+$('#mSave').addEventListener('click',()=>{
+  const code=$('#mOffice').value, v=parseFloat($('#mMonths').value);
+  if(Number.isNaN(v)){ toast('Enter a number of months'); return; }
+  const ov=overrides(); ov[code]=Math.round(v*10)/10; localStorage.setItem(LS_OVERRIDES,JSON.stringify(ov));
+  $('#mMonths').value=''; renderAll(); toast('Saved override');
+});
+$('#map').addEventListener('click',hideTip);
+window.addEventListener('resize',()=>{ if(state.data) renderMap(); });
+
+/* -------- boot -------- */
+(async function(){
+  await loadMap();
+  try{
+    state.data=await loadData(false);
+    state.prev=computePrev(); renderAll(); saveBaseline();
+    $('#lastChecked').textContent='Last checked '+new Date().toLocaleString();
+  }catch(e){
+    $('#hero').innerHTML='<div class="err">Could not load data.json — make sure it is deployed alongside this page.</div>';
+  }
+})();
+</script>
+</body>
+</html>
