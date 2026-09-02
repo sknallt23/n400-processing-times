@@ -5,63 +5,63 @@
   "unit": "months",
   "note": "80% of cases are completed within this many months",
   "source": "https://egov.uscis.gov/processing-times/",
-  "updated": "2026-07-30T17:32:28.365Z",
+  "updated": "2026-09-02T15:07:45.037Z",
   "offices": [
     {
       "code": "AGA",
       "office": "Agana GU",
       "city": "Agana",
       "state": "GU",
-      "months": 10.5
+      "months": 12.5
     },
     {
       "code": "ALB",
       "office": "Albany NY",
       "city": "Albany",
       "state": "NY",
-      "months": 8.5
+      "months": 9
     },
     {
       "code": "ABQ",
       "office": "Albuquerque NM",
       "city": "Albuquerque",
       "state": "NM",
-      "months": 11
+      "months": 13
     },
     {
       "code": "ANC",
       "office": "Anchorage AK",
       "city": "Anchorage",
       "state": "AK",
-      "months": 10.5
+      "months": 12
     },
     {
       "code": "ATL",
       "office": "Atlanta GA",
       "city": "Atlanta",
       "state": "GA",
-      "months": 11.5
+      "months": 12
     },
     {
       "code": "BAL",
       "office": "Baltimore MD",
       "city": "Baltimore",
       "state": "MD",
-      "months": 11.5
+      "months": 13
     },
     {
       "code": "BOI",
       "office": "Boise ID",
       "city": "Boise",
       "state": "ID",
-      "months": 12
+      "months": 14.5
     },
     {
       "code": "BOS",
       "office": "Boston MA",
       "city": "Boston",
       "state": "MA",
-      "months": 13
+      "months": 13.5
     },
     {
       "code": "BNY",
@@ -75,14 +75,14 @@
       "office": "Buffalo NY",
       "city": "Buffalo",
       "state": "NY",
-      "months": 12.5
+      "months": 13
     },
     {
       "code": "STA",
       "office": "Burlington VT",
       "city": "Burlington",
       "state": "VT",
-      "months": 9.5
+      "months": 10
     },
     {
       "code": "CHL",
@@ -96,98 +96,98 @@
       "office": "Charlotte Amalie VI",
       "city": "Charlotte Amalie",
       "state": "VI",
-      "months": 7
+      "months": 8.5
     },
     {
       "code": "CLT",
       "office": "Charlotte NC",
       "city": "Charlotte",
       "state": "NC",
-      "months": 10
+      "months": 10.5
     },
     {
       "code": "CHI",
       "office": "Chicago IL",
       "city": "Chicago",
       "state": "IL",
-      "months": 9.5
+      "months": 11.5
     },
     {
       "code": "CHR",
       "office": "Christiansted VI",
       "city": "Christiansted",
       "state": "VI",
-      "months": 10
+      "months": 11.5
     },
     {
       "code": "CIN",
       "office": "Cincinnati OH",
       "city": "Cincinnati",
       "state": "OH",
-      "months": 7.5
+      "months": 8
     },
     {
       "code": "CLE",
       "office": "Cleveland OH",
       "city": "Cleveland",
       "state": "OH",
-      "months": 8.5
+      "months": 9
     },
     {
       "code": "CLM",
       "office": "Columbus OH",
       "city": "Columbus",
       "state": "OH",
-      "months": 9
+      "months": 9.5
     },
     {
       "code": "NJC",
       "office": "Cranbury NJ",
       "city": "Cranbury",
       "state": "NJ",
-      "months": 8.5
+      "months": 9
     },
     {
       "code": "DAL",
       "office": "Dallas TX",
       "city": "Dallas",
       "state": "TX",
-      "months": 11.5
+      "months": 12
     },
     {
       "code": "DEN",
       "office": "Denver CO",
       "city": "Denver",
       "state": "CO",
-      "months": 12.5
+      "months": 13
     },
     {
       "code": "DSM",
       "office": "Des Moines IA",
       "city": "Des Moines",
       "state": "IA",
-      "months": 11
+      "months": 12.5
     },
     {
       "code": "DET",
       "office": "Detroit MI",
       "city": "Detroit",
       "state": "MI",
-      "months": 11
+      "months": 12
     },
     {
       "code": "ELP",
       "office": "El Paso TX",
       "city": "El Paso",
       "state": "TX",
-      "months": 11.5
+      "months": 12.5
     },
     {
       "code": "OFM",
       "office": "Fort Myers FL",
       "city": "Fort Myers",
       "state": "FL",
-      "months": 12.5
+      "months": 13
     },
     {
       "code": "FSA",
@@ -201,7 +201,7 @@
       "office": "Fresno CA",
       "city": "Fresno",
       "state": "CA",
-      "months": 12.5
+      "months": 14
     },
     {
       "code": "GRR",
@@ -215,35 +215,35 @@
       "office": "Harlingen TX",
       "city": "Harlingen",
       "state": "TX",
-      "months": 10.5
+      "months": 11
     },
     {
       "code": "HAR",
       "office": "Hartford CT",
       "city": "Hartford",
       "state": "CT",
-      "months": 10
+      "months": 10.5
     },
     {
       "code": "HEL",
       "office": "Helena MT",
       "city": "Helena",
       "state": "MT",
-      "months": 9
+      "months": 9.5
     },
     {
       "code": "HIA",
       "office": "Hialeah FL",
       "city": "Hialeah",
       "state": "FL",
-      "months": 7
+      "months": 8
     },
     {
       "code": "HHW",
       "office": "Honolulu HI",
       "city": "Honolulu",
       "state": "HI",
-      "months": 10.5
+      "months": 11.5
     },
     {
       "code": "HOU",
@@ -257,56 +257,56 @@
       "office": "Imperial CA",
       "city": "Imperial",
       "state": "CA",
-      "months": 12.5
+      "months": 13.5
     },
     {
       "code": "INP",
       "office": "Indianapolis IN",
       "city": "Indianapolis",
       "state": "IN",
-      "months": 12.5
+      "months": 13
     },
     {
       "code": "JAC",
       "office": "Jacksonville FL",
       "city": "Jacksonville",
       "state": "FL",
-      "months": 13.5
+      "months": 14.5
     },
     {
       "code": "KAN",
       "office": "Kansas City MO",
       "city": "Kansas City",
       "state": "MO",
-      "months": 11
+      "months": 12
     },
     {
       "code": "KND",
       "office": "Kendall FL",
       "city": "Kendall",
       "state": "FL",
-      "months": 8.5
+      "months": 9
     },
     {
       "code": "LVG",
       "office": "Las Vegas NV",
       "city": "Las Vegas",
       "state": "NV",
-      "months": 11.5
+      "months": 12.5
     },
     {
       "code": "LAW",
       "office": "Lawrence MA",
       "city": "Lawrence",
       "state": "MA",
-      "months": 17
+      "months": 17.5
     },
     {
       "code": "LNY",
       "office": "Long Island NY",
       "city": "Long Island",
       "state": "NY",
-      "months": 10
+      "months": 11
     },
     {
       "code": "LOS",
@@ -327,98 +327,98 @@
       "office": "Louisville KY",
       "city": "Louisville",
       "state": "KY",
-      "months": 9.5
+      "months": 10.5
     },
     {
       "code": "MAN",
       "office": "Manchester NH",
       "city": "Manchester",
       "state": "NH",
-      "months": 9
+      "months": 9.5
     },
     {
       "code": "MEM",
       "office": "Memphis TN",
       "city": "Memphis",
       "state": "TN",
-      "months": 10
+      "months": 10.5
     },
     {
       "code": "MIA",
       "office": "Miami FL",
       "city": "Miami",
       "state": "FL",
-      "months": 7.5
+      "months": 8
     },
     {
       "code": "MIL",
       "office": "Milwaukee WI",
       "city": "Milwaukee",
       "state": "WI",
-      "months": 11
+      "months": 12.5
     },
     {
       "code": "SPM",
       "office": "Minneapolis-St. Paul MN",
       "city": "Minneapolis-St. Paul",
       "state": "MN",
-      "months": 13.5
+      "months": 14.5
     },
     {
       "code": "MGA",
       "office": "Montgomery AL",
       "city": "Montgomery",
       "state": "AL",
-      "months": 8.5
+      "months": 9
     },
     {
       "code": "MTL",
       "office": "Mount Laurel NJ",
       "city": "Mount Laurel",
       "state": "NJ",
-      "months": 8.5
+      "months": 9.5
     },
     {
       "code": "NTN",
       "office": "Nashville TN",
       "city": "Nashville",
       "state": "TN",
-      "months": 11
+      "months": 11.5
     },
     {
       "code": "NEW",
       "office": "Newark NJ",
       "city": "Newark",
       "state": "NJ",
-      "months": 10
+      "months": 11
     },
     {
       "code": "NOL",
       "office": "New Orleans LA",
       "city": "New Orleans",
       "state": "LA",
-      "months": 10.5
+      "months": 12
     },
     {
       "code": "NYC",
       "office": "New York City NY",
       "city": "New York City",
       "state": "NY",
-      "months": 9.5
+      "months": 10
     },
     {
       "code": "NOR",
       "office": "Norfolk VA",
       "city": "Norfolk",
       "state": "VA",
-      "months": 8.5
+      "months": 9
     },
     {
       "code": "OKL",
       "office": "Oakland Park FL",
       "city": "Oakland Park",
       "state": "FL",
-      "months": 11.5
+      "months": 12
     },
     {
       "code": "OKC",
@@ -432,84 +432,84 @@
       "office": "Omaha NE",
       "city": "Omaha",
       "state": "NE",
-      "months": 11.5
+      "months": 12
     },
     {
       "code": "ORL",
       "office": "Orlando FL",
       "city": "Orlando",
       "state": "FL",
-      "months": 11
+      "months": 11.5
     },
     {
       "code": "PHI",
       "office": "Philadelphia PA",
       "city": "Philadelphia",
       "state": "PA",
-      "months": 10
+      "months": 10.5
     },
     {
       "code": "PHO",
       "office": "Phoenix AZ",
       "city": "Phoenix",
       "state": "AZ",
-      "months": 10.5
+      "months": 11.5
     },
     {
       "code": "PIT",
       "office": "Pittsburgh PA",
       "city": "Pittsburgh",
       "state": "PA",
-      "months": 10.5
+      "months": 11
     },
     {
       "code": "POM",
       "office": "Portland ME",
       "city": "Portland",
       "state": "ME",
-      "months": 12
+      "months": 13
     },
     {
       "code": "POO",
       "office": "Portland OR",
       "city": "Portland",
       "state": "OR",
-      "months": 12
+      "months": 13.5
     },
     {
       "code": "PRO",
       "office": "Providence RI",
       "city": "Providence",
       "state": "RI",
-      "months": 8.5
+      "months": 9.5
     },
     {
       "code": "QNS",
       "office": "Queens NY",
       "city": "Queens",
       "state": "NY",
-      "months": 8
+      "months": 9
     },
     {
       "code": "RAL",
       "office": "Raleigh NC",
       "city": "Raleigh",
       "state": "NC",
-      "months": 10.5
+      "months": 11.5
     },
     {
       "code": "REN",
       "office": "Reno NV",
       "city": "Reno",
       "state": "NV",
-      "months": 10
+      "months": 11
     },
     {
       "code": "SAC",
       "office": "Sacramento CA",
       "city": "Sacramento",
       "state": "CA",
-      "months": 14
+      "months": 15
     },
     {
       "code": "STL",
@@ -523,120 +523,214 @@
       "office": "Salt Lake City UT",
       "city": "Salt Lake City",
       "state": "UT",
-      "months": 11
+      "months": 12
     },
     {
       "code": "SNA",
       "office": "San Antonio TX",
       "city": "San Antonio",
       "state": "TX",
-      "months": 11
+      "months": 11.5
     },
     {
       "code": "SBD",
       "office": "San Bernardino CA",
       "city": "San Bernardino",
       "state": "CA",
-      "months": 11.5
+      "months": 12.5
     },
     {
       "code": "SND",
       "office": "San Diego CA",
       "city": "San Diego",
       "state": "CA",
-      "months": 12.5
+      "months": 15
     },
     {
       "code": "SFV",
       "office": "San Fernando Valley CA",
       "city": "San Fernando Valley",
       "state": "CA",
-      "months": 11.5
+      "months": 12
     },
     {
       "code": "SFR",
       "office": "San Francisco CA",
       "city": "San Francisco",
       "state": "CA",
-      "months": 12
+      "months": 13.5
     },
     {
       "code": "SNJ",
       "office": "San Jose CA",
       "city": "San Jose",
       "state": "CA",
-      "months": 12.5
+      "months": 14.5
     },
     {
       "code": "SAJ",
       "office": "San Juan PR",
       "city": "San Juan",
       "state": "PR",
-      "months": 7.5
+      "months": 8.5
     },
     {
       "code": "SAA",
       "office": "Santa Ana CA",
       "city": "Santa Ana",
       "state": "CA",
-      "months": 13
+      "months": 13.5
     },
     {
       "code": "SEA",
       "office": "Seattle WA",
       "city": "Seattle",
       "state": "WA",
-      "months": 11
+      "months": 12
     },
     {
       "code": "SPO",
       "office": "Spokane WA",
       "city": "Spokane",
       "state": "WA",
-      "months": 10
+      "months": 11
     },
     {
       "code": "TAM",
       "office": "Tampa FL",
       "city": "Tampa",
       "state": "FL",
-      "months": 12
+      "months": 13
     },
     {
       "code": "TUC",
       "office": "Tucson AZ",
       "city": "Tucson",
       "state": "AZ",
-      "months": 11.5
+      "months": 12
     },
     {
       "code": "WAS",
       "office": "Washington DC",
       "city": "Washington",
       "state": "DC",
-      "months": 10.5
+      "months": 11
     },
     {
       "code": "WPB",
       "office": "West Palm Beach FL",
       "city": "West Palm Beach",
       "state": "FL",
-      "months": 9
+      "months": 8.5
     },
     {
       "code": "WIC",
       "office": "Wichita KS",
       "city": "Wichita",
       "state": "KS",
-      "months": 11
+      "months": 12.5
     },
     {
       "code": "YAK",
       "office": "Yakima WA",
       "city": "Yakima",
       "state": "WA",
-      "months": 10.5
+      "months": 12
     }
   ],
-  "previous": null
+  "previous": {
+    "updated": "2026-07-30T17:32:28.365Z",
+    "byCode": {
+      "AGA": 10.5,
+      "ALB": 8.5,
+      "ABQ": 11,
+      "ANC": 10.5,
+      "ATL": 11.5,
+      "BAL": 11.5,
+      "BOI": 12,
+      "BOS": 13,
+      "BNY": 10,
+      "BUF": 12.5,
+      "STA": 9.5,
+      "CHL": 10.5,
+      "CHA": 7,
+      "CLT": 10,
+      "CHI": 9.5,
+      "CHR": 10,
+      "CIN": 7.5,
+      "CLE": 8.5,
+      "CLM": 9,
+      "NJC": 8.5,
+      "DAL": 11.5,
+      "DEN": 12.5,
+      "DSM": 11,
+      "DET": 11,
+      "ELP": 11.5,
+      "OFM": 12.5,
+      "FSA": 10,
+      "FRE": 12.5,
+      "GRR": 9,
+      "HLG": 10.5,
+      "HAR": 10,
+      "HEL": 9,
+      "HIA": 7,
+      "HHW": 10.5,
+      "HOU": 11.5,
+      "IMP": 12.5,
+      "INP": 12.5,
+      "JAC": 13.5,
+      "KAN": 11,
+      "KND": 8.5,
+      "LVG": 11.5,
+      "LAW": 17,
+      "LNY": 10,
+      "LOS": 9.5,
+      "LAC": 10.5,
+      "LOU": 9.5,
+      "MAN": 9,
+      "MEM": 10,
+      "MIA": 7.5,
+      "MIL": 11,
+      "SPM": 13.5,
+      "MGA": 8.5,
+      "MTL": 8.5,
+      "NTN": 11,
+      "NEW": 10,
+      "NOL": 10.5,
+      "NYC": 9.5,
+      "NOR": 8.5,
+      "OKL": 11.5,
+      "OKC": 12.5,
+      "OMA": 11.5,
+      "ORL": 11,
+      "PHI": 10,
+      "PHO": 10.5,
+      "PIT": 10.5,
+      "POM": 12,
+      "POO": 12,
+      "PRO": 8.5,
+      "QNS": 8,
+      "RAL": 10.5,
+      "REN": 10,
+      "SAC": 14,
+      "STL": 11,
+      "SLC": 11,
+      "SNA": 11,
+      "SBD": 11.5,
+      "SND": 12.5,
+      "SFV": 11.5,
+      "SFR": 12,
+      "SNJ": 12.5,
+      "SAJ": 7.5,
+      "SAA": 13,
+      "SEA": 11,
+      "SPO": 10,
+      "TAM": 12,
+      "TUC": 11.5,
+      "WAS": 10.5,
+      "WPB": 9,
+      "WIC": 11,
+      "YAK": 10.5
+    }
+  }
 }
