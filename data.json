@@ -5,7 +5,7 @@
   "unit": "months",
   "note": "80% of cases are completed within this many months",
   "source": "https://egov.uscis.gov/processing-times/",
-  "updated": "2026-10-07T17:50:34.342Z",
+  "updated": "2026-10-20T15:42:35.614Z",
   "offices": [
     {
       "code": "AGA",
@@ -117,7 +117,7 @@
       "office": "Christiansted VI",
       "city": "Christiansted",
       "state": "VI",
-      "months": 11.5
+      "months": null
     },
     {
       "code": "CIN",
@@ -292,14 +292,14 @@
       "office": "Las Vegas NV",
       "city": "Las Vegas",
       "state": "NV",
-      "months": 13
+      "months": null
     },
     {
       "code": "LAW",
       "office": "Lawrence MA",
       "city": "Lawrence",
       "state": "MA",
-      "months": 18
+      "months": null
     },
     {
       "code": "LNY",
@@ -481,7 +481,7 @@
       "office": "Providence RI",
       "city": "Providence",
       "state": "RI",
-      "months": 10
+      "months": null
     },
     {
       "code": "QNS",
@@ -516,7 +516,7 @@
       "office": "Saint Louis MO",
       "city": "Saint Louis",
       "state": "MO",
-      "months": 12.5
+      "months": null
     },
     {
       "code": "SLC",
@@ -537,14 +537,14 @@
       "office": "San Bernardino CA",
       "city": "San Bernardino",
       "state": "CA",
-      "months": 13
+      "months": null
     },
     {
       "code": "SND",
       "office": "San Diego CA",
       "city": "San Diego",
       "state": "CA",
-      "months": 15.5
+      "months": null
     },
     {
       "code": "SFV",
@@ -639,7 +639,7 @@
     }
   ],
   "previous": {
-    "updated": "2026-10-06T17:12:40.416Z",
+    "updated": "2026-10-07T17:50:34.342Z",
     "byCode": {
       "AGA": 13,
       "ALB": 10,
