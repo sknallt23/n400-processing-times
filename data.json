@@ -5,7 +5,7 @@
   "unit": "months",
   "note": "80% of cases are completed within this many months",
   "source": "https://egov.uscis.gov/processing-times/",
-  "updated": "2026-10-20T15:42:35.614Z",
+  "updated": "2026-10-22T15:55:19.432Z",
   "offices": [
     {
       "code": "AGA",
@@ -117,7 +117,7 @@
       "office": "Christiansted VI",
       "city": "Christiansted",
       "state": "VI",
-      "months": null
+      "months": 11.5
     },
     {
       "code": "CIN",
@@ -264,7 +264,7 @@
       "office": "Indianapolis IN",
       "city": "Indianapolis",
       "state": "IN",
-      "months": 14
+      "months": null
     },
     {
       "code": "JAC",
@@ -292,14 +292,14 @@
       "office": "Las Vegas NV",
       "city": "Las Vegas",
       "state": "NV",
-      "months": null
+      "months": 13
     },
     {
       "code": "LAW",
       "office": "Lawrence MA",
       "city": "Lawrence",
       "state": "MA",
-      "months": null
+      "months": 18
     },
     {
       "code": "LNY",
@@ -481,7 +481,7 @@
       "office": "Providence RI",
       "city": "Providence",
       "state": "RI",
-      "months": null
+      "months": 10
     },
     {
       "code": "QNS",
@@ -516,7 +516,7 @@
       "office": "Saint Louis MO",
       "city": "Saint Louis",
       "state": "MO",
-      "months": null
+      "months": 12.5
     },
     {
       "code": "SLC",
@@ -537,14 +537,14 @@
       "office": "San Bernardino CA",
       "city": "San Bernardino",
       "state": "CA",
-      "months": null
+      "months": 13
     },
     {
       "code": "SND",
       "office": "San Diego CA",
       "city": "San Diego",
       "state": "CA",
-      "months": null
+      "months": 15.5
     },
     {
       "code": "SFV",
@@ -639,7 +639,7 @@
     }
   ],
   "previous": {
-    "updated": "2026-10-07T17:50:34.342Z",
+    "updated": "2026-10-20T15:42:35.614Z",
     "byCode": {
       "AGA": 13,
       "ALB": 10,
@@ -656,7 +656,6 @@
       "CHA": 11.5,
       "CLT": 11,
       "CHI": 13,
-      "CHR": 11.5,
       "CIN": 9.5,
       "CLE": 10.5,
       "CLM": 10.5,
@@ -681,8 +680,6 @@
       "JAC": 15,
       "KAN": 12.5,
       "KND": 10,
-      "LVG": 13,
-      "LAW": 18,
       "LNY": 12,
       "LOS": 10.5,
       "LAC": 10.5,
@@ -708,16 +705,12 @@
       "PIT": 11.5,
       "POM": 14.5,
       "POO": 14.5,
-      "PRO": 10,
       "QNS": 10.5,
       "RAL": 12,
       "REN": 11.5,
       "SAC": 16,
-      "STL": 12.5,
       "SLC": 13.5,
       "SNA": 11.5,
-      "SBD": 13,
-      "SND": 15.5,
       "SFV": 13,
       "SFR": 14.5,
       "SNJ": 16,
