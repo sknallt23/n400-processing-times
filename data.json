@@ -5,7 +5,7 @@
   "unit": "months",
   "note": "80% of cases are completed within this many months",
   "source": "https://egov.uscis.gov/processing-times/",
-  "updated": "2026-10-22T15:55:19.432Z",
+  "updated": "2026-10-23T15:47:25.355Z",
   "offices": [
     {
       "code": "AGA",
@@ -264,7 +264,7 @@
       "office": "Indianapolis IN",
       "city": "Indianapolis",
       "state": "IN",
-      "months": null
+      "months": 14
     },
     {
       "code": "JAC",
@@ -348,7 +348,7 @@
       "office": "Miami FL",
       "city": "Miami",
       "state": "FL",
-      "months": 10
+      "months": null
     },
     {
       "code": "MIL",
@@ -362,7 +362,7 @@
       "office": "Minneapolis-St. Paul MN",
       "city": "Minneapolis-St. Paul",
       "state": "MN",
-      "months": 14.5
+      "months": null
     },
     {
       "code": "MGA",
@@ -439,7 +439,7 @@
       "office": "Orlando FL",
       "city": "Orlando",
       "state": "FL",
-      "months": 13.5
+      "months": null
     },
     {
       "code": "PHI",
@@ -488,14 +488,14 @@
       "office": "Queens NY",
       "city": "Queens",
       "state": "NY",
-      "months": 10.5
+      "months": null
     },
     {
       "code": "RAL",
       "office": "Raleigh NC",
       "city": "Raleigh",
       "state": "NC",
-      "months": 12
+      "months": null
     },
     {
       "code": "REN",
@@ -593,7 +593,7 @@
       "office": "Spokane WA",
       "city": "Spokane",
       "state": "WA",
-      "months": 11.5
+      "months": null
     },
     {
       "code": "TAM",
@@ -639,7 +639,7 @@
     }
   ],
   "previous": {
-    "updated": "2026-10-20T15:42:35.614Z",
+    "updated": "2026-10-22T15:55:19.432Z",
     "byCode": {
       "AGA": 13,
       "ALB": 10,
@@ -656,6 +656,7 @@
       "CHA": 11.5,
       "CLT": 11,
       "CHI": 13,
+      "CHR": 11.5,
       "CIN": 9.5,
       "CLE": 10.5,
       "CLM": 10.5,
@@ -676,10 +677,11 @@
       "HHW": 12.5,
       "HOU": 12,
       "IMP": 14.5,
-      "INP": 14,
       "JAC": 15,
       "KAN": 12.5,
       "KND": 10,
+      "LVG": 13,
+      "LAW": 18,
       "LNY": 12,
       "LOS": 10.5,
       "LAC": 10.5,
@@ -705,12 +707,16 @@
       "PIT": 11.5,
       "POM": 14.5,
       "POO": 14.5,
+      "PRO": 10,
       "QNS": 10.5,
       "RAL": 12,
       "REN": 11.5,
       "SAC": 16,
+      "STL": 12.5,
       "SLC": 13.5,
       "SNA": 11.5,
+      "SBD": 13,
+      "SND": 15.5,
       "SFV": 13,
       "SFR": 14.5,
       "SNJ": 16,
