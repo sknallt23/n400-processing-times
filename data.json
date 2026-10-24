@@ -5,7 +5,7 @@
   "unit": "months",
   "note": "80% of cases are completed within this many months",
   "source": "https://egov.uscis.gov/processing-times/",
-  "updated": "2026-10-23T15:47:25.355Z",
+  "updated": "2026-10-24T14:35:41.372Z",
   "offices": [
     {
       "code": "AGA",
@@ -68,7 +68,7 @@
       "office": "Brooklyn NY",
       "city": "Brooklyn",
       "state": "NY",
-      "months": 11
+      "months": null
     },
     {
       "code": "BUF",
@@ -236,7 +236,7 @@
       "office": "Hialeah FL",
       "city": "Hialeah",
       "state": "FL",
-      "months": 9.5
+      "months": null
     },
     {
       "code": "HHW",
@@ -250,7 +250,7 @@
       "office": "Houston TX",
       "city": "Houston",
       "state": "TX",
-      "months": 12
+      "months": null
     },
     {
       "code": "IMP",
@@ -271,14 +271,14 @@
       "office": "Jacksonville FL",
       "city": "Jacksonville",
       "state": "FL",
-      "months": 15
+      "months": null
     },
     {
       "code": "KAN",
       "office": "Kansas City MO",
       "city": "Kansas City",
       "state": "MO",
-      "months": 12.5
+      "months": null
     },
     {
       "code": "KND",
@@ -306,7 +306,7 @@
       "office": "Long Island NY",
       "city": "Long Island",
       "state": "NY",
-      "months": 12
+      "months": null
     },
     {
       "code": "LOS",
@@ -355,14 +355,14 @@
       "office": "Milwaukee WI",
       "city": "Milwaukee",
       "state": "WI",
-      "months": 14
+      "months": null
     },
     {
       "code": "SPM",
       "office": "Minneapolis-St. Paul MN",
       "city": "Minneapolis-St. Paul",
       "state": "MN",
-      "months": null
+      "months": 14.5
     },
     {
       "code": "MGA",
@@ -404,7 +404,7 @@
       "office": "New York City NY",
       "city": "New York City",
       "state": "NY",
-      "months": 10
+      "months": null
     },
     {
       "code": "NOR",
@@ -439,7 +439,7 @@
       "office": "Orlando FL",
       "city": "Orlando",
       "state": "FL",
-      "months": null
+      "months": 13.5
     },
     {
       "code": "PHI",
@@ -460,14 +460,14 @@
       "office": "Pittsburgh PA",
       "city": "Pittsburgh",
       "state": "PA",
-      "months": 11.5
+      "months": null
     },
     {
       "code": "POM",
       "office": "Portland ME",
       "city": "Portland",
       "state": "ME",
-      "months": 14.5
+      "months": null
     },
     {
       "code": "POO",
@@ -481,7 +481,7 @@
       "office": "Providence RI",
       "city": "Providence",
       "state": "RI",
-      "months": 10
+      "months": null
     },
     {
       "code": "QNS",
@@ -502,7 +502,7 @@
       "office": "Reno NV",
       "city": "Reno",
       "state": "NV",
-      "months": 11.5
+      "months": null
     },
     {
       "code": "SAC",
@@ -593,7 +593,7 @@
       "office": "Spokane WA",
       "city": "Spokane",
       "state": "WA",
-      "months": null
+      "months": 11.5
     },
     {
       "code": "TAM",
@@ -621,7 +621,7 @@
       "office": "West Palm Beach FL",
       "city": "West Palm Beach",
       "state": "FL",
-      "months": 10
+      "months": null
     },
     {
       "code": "WIC",
@@ -639,7 +639,7 @@
     }
   ],
   "previous": {
-    "updated": "2026-10-22T15:55:19.432Z",
+    "updated": "2026-10-23T15:47:25.355Z",
     "byCode": {
       "AGA": 13,
       "ALB": 10,
@@ -677,6 +677,7 @@
       "HHW": 12.5,
       "HOU": 12,
       "IMP": 14.5,
+      "INP": 14,
       "JAC": 15,
       "KAN": 12.5,
       "KND": 10,
@@ -688,9 +689,7 @@
       "LOU": 10.5,
       "MAN": 10.5,
       "MEM": 12,
-      "MIA": 10,
       "MIL": 14,
-      "SPM": 14.5,
       "MGA": 9.5,
       "MTL": 10,
       "NTN": 13,
@@ -701,15 +700,12 @@
       "OKL": 12.5,
       "OKC": 13,
       "OMA": 12.5,
-      "ORL": 13.5,
       "PHI": 11.5,
       "PHO": 12,
       "PIT": 11.5,
       "POM": 14.5,
       "POO": 14.5,
       "PRO": 10,
-      "QNS": 10.5,
-      "RAL": 12,
       "REN": 11.5,
       "SAC": 16,
       "STL": 12.5,
@@ -723,7 +719,6 @@
       "SAJ": 9.5,
       "SAA": 14,
       "SEA": 13.5,
-      "SPO": 11.5,
       "TAM": 13.5,
       "TUC": 12,
       "WAS": 11.5,
