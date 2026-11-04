@@ -56,17 +56,22 @@ async function waitOptions(page, sel, min = 2, tries = 30) {
   return await selectOptions(page, sel);
 }
 
-async function clearChallenge(page) {
-  console.error('Loading USCIS and clearing Cloudflare…');
-  await page.goto(`${BASE}/`, { waitUntil: 'domcontentloaded', timeout: 90000 });
-  for (let i = 0; i < 20; i++) {
-    const t = await page.title().catch(() => '?');
-    if (!/just a moment|verif|attention required/i.test(t)) {
-      // ensure the form is present
-      const hasForm = await page.$('#formName');
-      if (hasForm) { console.error(`Cleared (title: ${t}).`); return true; }
+// Load the site and wait for Turnstile to clear. From a datacenter IP the
+// challenge sometimes never resolves on the first page load but does on a
+// fresh one, so reload and try again a few times before giving up.
+async function clearChallenge(page, attempts = 3) {
+  for (let a = 1; a <= attempts; a++) {
+    console.error(a === 1 ? 'Loading USCIS and clearing Cloudflare…'
+                          : `Cloudflare not cleared, reloading (attempt ${a}/${attempts})…`);
+    try { await page.goto(`${BASE}/`, { waitUntil: 'domcontentloaded', timeout: 90000 }); }
+    catch (e) { console.error(`  load failed: ${e.message}`); continue; }
+    for (let i = 0; i < 24; i++) {                       // up to ~60s per attempt
+      const t = await page.title().catch(() => '?');
+      if (!/just a moment|verif|attention required/i.test(t) && await page.$('#formName')) {
+        console.error(`Cleared (title: ${t}).`); return true;
+      }
+      await sleep(2500);
     }
-    await sleep(2500);
   }
   return false;
 }
@@ -120,17 +125,22 @@ async function main() {
   try {
     if (!(await clearChallenge(page))) throw new Error('Could not clear Cloudflare challenge.');
 
-    // Select form + category, then read the office list.
-    await page.select('#formName', FORM);
-    await sleep(1200);
-    await waitOptions(page, '#formCategory', 2);
-    await page.select('#formCategory', CATEGORY);
-    await sleep(1500);
-
-    let offices = (await waitOptions(page, '#officeSc', 3)) || [];
-    offices = offices.filter((o) => o.v && !/select one/i.test(o.t));
-    if (ONLY.length) offices = offices.filter((o) => ONLY.includes(o.v));
-    console.error(`Found ${offices.length} offices for ${FORM}.`);
+    // Select form + category, then read the office list. The SPA sometimes
+    // ignores a select or is slow to fill the office list, so retry a few times.
+    let all = [];
+    for (let attempt = 1; attempt <= 3 && !all.length; attempt++) {
+      if (attempt > 1) console.error(`Office list empty, retrying (${attempt}/3)…`);
+      await page.select('#formName', FORM);
+      await sleep(1200);
+      await waitOptions(page, '#formCategory', 2);
+      await page.select('#formCategory', CATEGORY);
+      await sleep(1500);
+      all = ((await waitOptions(page, '#officeSc', 3, 60)) || [])
+        .filter((o) => o.v && !/select one/i.test(o.t));
+    }
+    const offices = ONLY.length ? all.filter((o) => ONLY.includes(o.v)) : all;
+    console.error(`Found ${all.length} offices for ${FORM}` +
+      (ONLY.length ? `, ${offices.length} matching ONLY=${ONLY.join(',')}.` : '.'));
     if (!offices.length) throw new Error('No offices returned.');
 
     const results = [];
@@ -139,7 +149,12 @@ async function main() {
       await page.select('#officeSc', off.v);
       await sleep(300);
       await page.click('#buttonGetProcessingTime').catch(() => {});
-      const { months, raw } = await readResult(page, off.t);
+      let { months, raw } = await readResult(page, off.t);
+      if (raw === 'timeout') {                      // the site's lookup stalls now and then; one more try
+        await page.click('#buttonGetProcessingTime').catch(() => {});
+        ({ months, raw } = await readResult(page, off.t));
+        raw += ' (retried)';
+      }
       const { city, state } = splitOffice(off.t);
       results.push({ code: off.v, office: off.t, city, state, months });
       console.error(`  [${idx + 1}/${offices.length}] ${off.t.padEnd(24)} ${months ?? '—'} mo  (${raw})`);

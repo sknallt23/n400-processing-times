@@ -10,6 +10,7 @@ name: Refresh N-400 processing times
 on:
   schedule:
     - cron: '17 11 * * *'   # daily ~11:17 UTC
+    - cron: '41 23 * * *'   # second try ~23:41 UTC from a different runner, in case Cloudflare blocked the first
   workflow_dispatch:        # manual "Run workflow" button
 
 permissions:
@@ -25,17 +26,18 @@ jobs:
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # history/offices.json is built from every past data.json
 
       - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
 
-      - name: Install Chrome
-        id: chrome
-        uses: browser-actions/setup-chrome@v1
-        with:
-          chrome-version: stable
+      # The runner image ships real Google Chrome. Cloudflare's Turnstile is
+      # more likely to pass with it than with a plain Chromium build.
+      - name: Check Chrome
+        run: google-chrome --version
 
       - name: Install Xvfb
         run: sudo apt-get update && sudo apt-get install -y xvfb
@@ -45,18 +47,21 @@ jobs:
 
       - name: Scrape USCIS
         env:
-          CHROME_PATH: ${{ steps.chrome.outputs.chrome-path }}
+          CHROME_PATH: /usr/bin/google-chrome
           DISABLE_XVFB: 'true'
         run: xvfb-run -a --server-args="-screen 0 1300x1000x24" node scraper/scrape.mjs
 
+      - name: Build per-office history
+        run: node scraper/history.mjs
+
       - name: Commit if changed
         run: |
-          if git diff --quiet -- data.json; then
+          if git diff --quiet -- data.json history/offices.json; then
             echo "No change in data.json."
           else
             git config user.name  "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add data.json
+            git add data.json history/offices.json
             git commit -m "Update N-400 processing times ($(date -u +%Y-%m-%d))"
             git push
           fi
