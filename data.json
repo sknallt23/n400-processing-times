@@ -5,7 +5,7 @@
   "unit": "months",
   "note": "80% of cases are completed within this many months",
   "source": "https://egov.uscis.gov/processing-times/",
-  "updated": "2026-11-03T18:26:38.384Z",
+  "updated": "2026-11-05T18:47:13.546Z",
   "offices": [
     {
       "code": "AGA",
@@ -166,7 +166,7 @@
       "office": "Des Moines IA",
       "city": "Des Moines",
       "state": "IA",
-      "months": 13.5
+      "months": null
     },
     {
       "code": "DET",
@@ -229,14 +229,14 @@
       "office": "Helena MT",
       "city": "Helena",
       "state": "MT",
-      "months": 9.5
+      "months": null
     },
     {
       "code": "HIA",
       "office": "Hialeah FL",
       "city": "Hialeah",
       "state": "FL",
-      "months": 9.5
+      "months": null
     },
     {
       "code": "HHW",
@@ -250,14 +250,14 @@
       "office": "Houston TX",
       "city": "Houston",
       "state": "TX",
-      "months": 12
+      "months": null
     },
     {
       "code": "IMP",
       "office": "Imperial CA",
       "city": "Imperial",
       "state": "CA",
-      "months": 14.5
+      "months": null
     },
     {
       "code": "INP",
@@ -306,14 +306,14 @@
       "office": "Long Island NY",
       "city": "Long Island",
       "state": "NY",
-      "months": 12
+      "months": null
     },
     {
       "code": "LOS",
       "office": "Los Angeles CA",
       "city": "Los Angeles",
       "state": "CA",
-      "months": 10.5
+      "months": null
     },
     {
       "code": "LAC",
@@ -334,14 +334,14 @@
       "office": "Manchester NH",
       "city": "Manchester",
       "state": "NH",
-      "months": 10.5
+      "months": null
     },
     {
       "code": "MEM",
       "office": "Memphis TN",
       "city": "Memphis",
       "state": "TN",
-      "months": 12
+      "months": null
     },
     {
       "code": "MIA",
@@ -383,7 +383,7 @@
       "office": "Nashville TN",
       "city": "Nashville",
       "state": "TN",
-      "months": 13
+      "months": null
     },
     {
       "code": "NEW",
@@ -432,7 +432,7 @@
       "office": "Omaha NE",
       "city": "Omaha",
       "state": "NE",
-      "months": 12.5
+      "months": null
     },
     {
       "code": "ORL",
@@ -453,7 +453,7 @@
       "office": "Phoenix AZ",
       "city": "Phoenix",
       "state": "AZ",
-      "months": 12
+      "months": null
     },
     {
       "code": "PIT",
@@ -488,7 +488,7 @@
       "office": "Queens NY",
       "city": "Queens",
       "state": "NY",
-      "months": null
+      "months": 10.5
     },
     {
       "code": "RAL",
@@ -639,7 +639,7 @@
     }
   ],
   "previous": {
-    "updated": "2026-10-24T14:35:41.372Z",
+    "updated": "2026-11-03T18:26:38.384Z",
     "byCode": {
       "AGA": 13,
       "ALB": 10,
@@ -649,6 +649,7 @@
       "BAL": 15,
       "BOI": 15,
       "BOS": 13.5,
+      "BNY": 11,
       "BUF": 14.5,
       "STA": 10.5,
       "CHL": 11.5,
@@ -672,23 +673,31 @@
       "HLG": 11.5,
       "HAR": 11.5,
       "HEL": 9.5,
+      "HIA": 9.5,
       "HHW": 12.5,
+      "HOU": 12,
       "IMP": 14.5,
       "INP": 14,
+      "JAC": 15,
+      "KAN": 12.5,
       "KND": 10,
       "LVG": 13,
       "LAW": 18,
+      "LNY": 12,
       "LOS": 10.5,
       "LAC": 10.5,
       "LOU": 10.5,
       "MAN": 10.5,
       "MEM": 12,
+      "MIA": 10,
+      "MIL": 14,
       "SPM": 14.5,
       "MGA": 9.5,
       "MTL": 10,
       "NTN": 13,
       "NEW": 11.5,
       "NOL": 12.5,
+      "NYC": 10,
       "NOR": 10.5,
       "OKL": 12.5,
       "OKC": 13,
@@ -696,7 +705,12 @@
       "ORL": 13.5,
       "PHI": 11.5,
       "PHO": 12,
+      "PIT": 11.5,
+      "POM": 14.5,
       "POO": 14.5,
+      "PRO": 10,
+      "RAL": 12,
+      "REN": 11.5,
       "SAC": 16,
       "STL": 12.5,
       "SLC": 13.5,
@@ -713,6 +727,7 @@
       "TAM": 13.5,
       "TUC": 12,
       "WAS": 11.5,
+      "WPB": 10,
       "WIC": 13,
       "YAK": 13.5
     }
