@@ -5,7 +5,7 @@
   "unit": "months",
   "note": "80% of cases are completed within this many months",
   "source": "https://egov.uscis.gov/processing-times/",
-  "updated": "2026-11-05T18:47:13.546Z",
+  "updated": "2026-11-08T17:04:38.974Z",
   "offices": [
     {
       "code": "AGA",
@@ -166,7 +166,7 @@
       "office": "Des Moines IA",
       "city": "Des Moines",
       "state": "IA",
-      "months": null
+      "months": 13.5
     },
     {
       "code": "DET",
@@ -229,14 +229,14 @@
       "office": "Helena MT",
       "city": "Helena",
       "state": "MT",
-      "months": null
+      "months": 9.5
     },
     {
       "code": "HIA",
       "office": "Hialeah FL",
       "city": "Hialeah",
       "state": "FL",
-      "months": null
+      "months": 9.5
     },
     {
       "code": "HHW",
@@ -250,14 +250,14 @@
       "office": "Houston TX",
       "city": "Houston",
       "state": "TX",
-      "months": null
+      "months": 12
     },
     {
       "code": "IMP",
       "office": "Imperial CA",
       "city": "Imperial",
       "state": "CA",
-      "months": null
+      "months": 14.5
     },
     {
       "code": "INP",
@@ -306,21 +306,21 @@
       "office": "Long Island NY",
       "city": "Long Island",
       "state": "NY",
-      "months": null
+      "months": 12
     },
     {
       "code": "LOS",
       "office": "Los Angeles CA",
       "city": "Los Angeles",
       "state": "CA",
-      "months": null
+      "months": 10.5
     },
     {
       "code": "LAC",
       "office": "Los Angeles County CA",
       "city": "Los Angeles County",
       "state": "CA",
-      "months": 10.5
+      "months": null
     },
     {
       "code": "LOU",
@@ -341,7 +341,7 @@
       "office": "Memphis TN",
       "city": "Memphis",
       "state": "TN",
-      "months": null
+      "months": 12
     },
     {
       "code": "MIA",
@@ -355,14 +355,14 @@
       "office": "Milwaukee WI",
       "city": "Milwaukee",
       "state": "WI",
-      "months": 14
+      "months": null
     },
     {
       "code": "SPM",
       "office": "Minneapolis-St. Paul MN",
       "city": "Minneapolis-St. Paul",
       "state": "MN",
-      "months": 14.5
+      "months": null
     },
     {
       "code": "MGA",
@@ -383,7 +383,7 @@
       "office": "Nashville TN",
       "city": "Nashville",
       "state": "TN",
-      "months": null
+      "months": 13
     },
     {
       "code": "NEW",
@@ -397,7 +397,7 @@
       "office": "New Orleans LA",
       "city": "New Orleans",
       "state": "LA",
-      "months": 12.5
+      "months": null
     },
     {
       "code": "NYC",
@@ -453,7 +453,7 @@
       "office": "Phoenix AZ",
       "city": "Phoenix",
       "state": "AZ",
-      "months": null
+      "months": 12
     },
     {
       "code": "PIT",
@@ -628,7 +628,7 @@
       "office": "Wichita KS",
       "city": "Wichita",
       "state": "KS",
-      "months": 13
+      "months": null
     },
     {
       "code": "YAK",
@@ -639,7 +639,7 @@
     }
   ],
   "previous": {
-    "updated": "2026-11-03T18:26:38.384Z",
+    "updated": "2026-11-05T18:47:13.546Z",
     "byCode": {
       "AGA": 13,
       "ALB": 10,
@@ -663,7 +663,6 @@
       "NJC": 9,
       "DAL": 13,
       "DEN": 14,
-      "DSM": 13.5,
       "DET": 13,
       "ELP": 13,
       "OFM": 15.5,
@@ -672,43 +671,33 @@
       "GRR": 10,
       "HLG": 11.5,
       "HAR": 11.5,
-      "HEL": 9.5,
-      "HIA": 9.5,
       "HHW": 12.5,
-      "HOU": 12,
-      "IMP": 14.5,
       "INP": 14,
       "JAC": 15,
       "KAN": 12.5,
       "KND": 10,
       "LVG": 13,
       "LAW": 18,
-      "LNY": 12,
-      "LOS": 10.5,
       "LAC": 10.5,
       "LOU": 10.5,
-      "MAN": 10.5,
-      "MEM": 12,
       "MIA": 10,
       "MIL": 14,
       "SPM": 14.5,
       "MGA": 9.5,
       "MTL": 10,
-      "NTN": 13,
       "NEW": 11.5,
       "NOL": 12.5,
       "NYC": 10,
       "NOR": 10.5,
       "OKL": 12.5,
       "OKC": 13,
-      "OMA": 12.5,
       "ORL": 13.5,
       "PHI": 11.5,
-      "PHO": 12,
       "PIT": 11.5,
       "POM": 14.5,
       "POO": 14.5,
       "PRO": 10,
+      "QNS": 10.5,
       "RAL": 12,
       "REN": 11.5,
       "SAC": 16,
