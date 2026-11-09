@@ -29,6 +29,11 @@ const CATEGORY = '160A'; // "Application for Naturalization"
 const ONLY = (process.env.ONLY || '').split(',').map((s) => s.trim()).filter(Boolean);
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+// Thrown when USCIS/Cloudflare is refusing this client rather than the scraper
+// being broken. Exits with code 2 so the workflow can retry quietly on a fresh
+// runner; every other failure exits 1 and should be looked at.
+class Blocked extends Error {}
 const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 function chromePath() {
@@ -56,17 +61,22 @@ async function waitOptions(page, sel, min = 2, tries = 30) {
   return await selectOptions(page, sel);
 }
 
-async function clearChallenge(page) {
-  console.error('Loading USCIS and clearing Cloudflare…');
-  await page.goto(`${BASE}/`, { waitUntil: 'domcontentloaded', timeout: 90000 });
-  for (let i = 0; i < 20; i++) {
-    const t = await page.title().catch(() => '?');
-    if (!/just a moment|verif|attention required/i.test(t)) {
-      // ensure the form is present
-      const hasForm = await page.$('#formName');
-      if (hasForm) { console.error(`Cleared (title: ${t}).`); return true; }
+// Load the site and wait for Turnstile to clear. From a datacenter IP the
+// challenge sometimes never resolves on the first page load but does on a
+// fresh one, so reload and try again a few times before giving up.
+async function clearChallenge(page, attempts = 3) {
+  for (let a = 1; a <= attempts; a++) {
+    console.error(a === 1 ? 'Loading USCIS and clearing Cloudflare…'
+                          : `Cloudflare not cleared, reloading (attempt ${a}/${attempts})…`);
+    try { await page.goto(`${BASE}/`, { waitUntil: 'domcontentloaded', timeout: 90000 }); }
+    catch (e) { console.error(`  load failed: ${e.message}`); continue; }
+    for (let i = 0; i < 24; i++) {                       // up to ~60s per attempt
+      const t = await page.title().catch(() => '?');
+      if (!/just a moment|verif|attention required/i.test(t) && await page.$('#formName')) {
+        console.error(`Cleared (title: ${t}).`); return true;
+      }
+      await sleep(2500);
     }
-    await sleep(2500);
   }
   return false;
 }
@@ -106,32 +116,49 @@ function splitOffice(name) {
   return { city: name, state: '' };
 }
 
+const launch = () => connect({
+  headless: (process.env.HEADLESS || '').toLowerCase() === 'true',
+  turnstile: true,
+  // In CI we provide our own virtual display via `xvfb-run`, so tell the lib
+  // not to manage Xvfb itself (set DISABLE_XVFB=true in the workflow).
+  disableXvfb: (process.env.DISABLE_XVFB || '').toLowerCase() === 'true',
+  args: ['--window-size=1300,1000', '--lang=en-US'],
+  customConfig: chromePath() ? { chromePath: chromePath() } : {},
+});
+
+// Open USCIS past Cloudflare. Each launch gets a fresh browser profile, so a
+// Turnstile session that is stuck gets replaced rather than reloaded forever.
+async function openSite(launches = 2) {
+  for (let n = 1; n <= launches; n++) {
+    if (n > 1) console.error(`Relaunching Chrome with a fresh profile (${n}/${launches})…`);
+    const { browser, page } = await launch();
+    if (await clearChallenge(page, 2)) return { browser, page };
+    await browser.close().catch(() => {});
+  }
+  throw new Blocked('Could not clear Cloudflare challenge.');
+}
+
 async function main() {
-  const { browser, page } = await connect({
-    headless: (process.env.HEADLESS || '').toLowerCase() === 'true',
-    turnstile: true,
-    // In CI we provide our own virtual display via `xvfb-run`, so tell the lib
-    // not to manage Xvfb itself (set DISABLE_XVFB=true in the workflow).
-    disableXvfb: (process.env.DISABLE_XVFB || '').toLowerCase() === 'true',
-    args: ['--window-size=1300,1000', '--lang=en-US'],
-    customConfig: chromePath() ? { chromePath: chromePath() } : {},
-  });
+  const { browser, page } = await openSite();
 
   try {
-    if (!(await clearChallenge(page))) throw new Error('Could not clear Cloudflare challenge.');
-
-    // Select form + category, then read the office list.
-    await page.select('#formName', FORM);
-    await sleep(1200);
-    await waitOptions(page, '#formCategory', 2);
-    await page.select('#formCategory', CATEGORY);
-    await sleep(1500);
-
-    let offices = (await waitOptions(page, '#officeSc', 3)) || [];
-    offices = offices.filter((o) => o.v && !/select one/i.test(o.t));
-    if (ONLY.length) offices = offices.filter((o) => ONLY.includes(o.v));
-    console.error(`Found ${offices.length} offices for ${FORM}.`);
-    if (!offices.length) throw new Error('No offices returned.');
+    // Select form + category, then read the office list. The SPA sometimes
+    // ignores a select or is slow to fill the office list, so retry a few times.
+    let all = [];
+    for (let attempt = 1; attempt <= 3 && !all.length; attempt++) {
+      if (attempt > 1) console.error(`Office list empty, retrying (${attempt}/3)…`);
+      await page.select('#formName', FORM);
+      await sleep(1200);
+      await waitOptions(page, '#formCategory', 2);
+      await page.select('#formCategory', CATEGORY);
+      await sleep(1500);
+      all = ((await waitOptions(page, '#officeSc', 3, 60)) || [])
+        .filter((o) => o.v && !/select one/i.test(o.t));
+    }
+    const offices = ONLY.length ? all.filter((o) => ONLY.includes(o.v)) : all;
+    console.error(`Found ${all.length} offices for ${FORM}` +
+      (ONLY.length ? `, ${offices.length} matching ONLY=${ONLY.join(',')}.` : '.'));
+    if (!offices.length) throw new Blocked('No offices returned.');
 
     const results = [];
     for (let idx = 0; idx < offices.length; idx++) {
@@ -139,7 +166,12 @@ async function main() {
       await page.select('#officeSc', off.v);
       await sleep(300);
       await page.click('#buttonGetProcessingTime').catch(() => {});
-      const { months, raw } = await readResult(page, off.t);
+      let { months, raw } = await readResult(page, off.t);
+      if (raw === 'timeout') {                      // the site's lookup stalls now and then; one more try
+        await page.click('#buttonGetProcessingTime').catch(() => {});
+        ({ months, raw } = await readResult(page, off.t));
+        raw += ' (retried)';
+      }
       const { city, state } = splitOffice(off.t);
       results.push({ code: off.v, office: off.t, city, state, months });
       console.error(`  [${idx + 1}/${offices.length}] ${off.t.padEnd(24)} ${months ?? '—'} mo  (${raw})`);
@@ -172,13 +204,13 @@ async function main() {
     await writeFile(OUT, JSON.stringify(payload, null, 2));
     const ok = results.filter((r) => r.months != null).length;
     console.error(`\nWrote ${OUT} — ${ok}/${results.length} offices with data.`);
-    if (ok === 0) throw new Error('No offices produced data — treating as failure.');
+    if (ok === 0) throw new Blocked('No offices produced data — treating as blocked.');
   } finally {
     await browser.close();
   }
 }
 
 main().catch((e) => {
-  console.error('FATAL:', e.stack || e.message);
-  process.exit(1);
+  console.error('FATAL:', e instanceof Blocked ? e.message : (e.stack || e.message));
+  process.exit(e instanceof Blocked ? 2 : 1);
 });
